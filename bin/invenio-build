@@ -1,0 +1,15 @@
+#!/bin/bash
+
+source `which virtualenvwrapper.sh`
+
+cdvirtualenv && \
+cd src/invenio && \
+make install && \
+python setup.py develop && \
+find . -name "*.pyc" -exec rm -rfv {} \; && \
+redis-cli flushdb && \
+echo "Success."
+
+if hash notify-send 2>/dev/null; then
+    notify-send --urgency=low "invenio-build finished"
+fi
