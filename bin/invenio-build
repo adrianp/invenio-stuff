@@ -2,12 +2,14 @@
 
 source `which virtualenvwrapper.sh`
 
-cdvirtualenv && \
-cd src/invenio && \
-make install && \
-python setup.py develop && \
-find . -name "*.pyc" -exec rm -rfv {} \; && \
-redis-cli flushdb && \
+kill -9 -$(ps | grep 'inveniomanage' | grep -v grep | awk '{print $1}')
+cdvirtualenv &&
+rm -rfv etc/*
+cd src/invenio &&
+make install &&
+python setup.py develop &&
+find . -name "*.pyc" -exec rm -rfv {} \; &&
+redis-cli flushdb
 echo "Success."
 
 if hash notify-send 2>/dev/null; then
