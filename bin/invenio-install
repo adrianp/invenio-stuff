@@ -47,6 +47,17 @@ check_correct_cfgs(){
     fi
 }
 
+##################################
+# Step -1: Check Python version  #
+##################################
+PYTHON_VERSION=$(python -c 'import sys; print(".".join(map(str, sys.version_info[:3])))')
+if [ "$PYTHON_VERSION" == "2.7.4" ];
+then
+    # FIXME: better message
+    echo "Invenio has known issues with your version of Python."
+    echo "Please upgrade to Python >2.7.4 and retry."
+    exit 1
+fi
 
 ##################################
 # Step 0: Parse script variables #
